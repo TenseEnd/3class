@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Friends – English Game</title>
+<style>
+:root{--ink:#24304b;--purple:#8b55c8;--blue:#397bd8;--green:#79bd45;--yellow:#ffd45c;--pink:#ff8eae;--bg:#f5f7ff}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Trebuchet MS",Arial,sans-serif;background:linear-gradient(135deg,#eaf4ff,#fff1f7);color:var(--ink);min-height:100vh}
+button{font:inherit;cursor:pointer;border:0}
+header{padding:22px 16px 12px;text-align:center}
+.tag{display:inline-block;background:#7fbd43;color:white;border-radius:12px;padding:7px 15px;font-weight:900;letter-spacing:.5px}
+h1{font-size:clamp(30px,5vw,48px);margin:12px 0 4px;color:#7845b4}
+.sub{font-size:17px;color:#5b6680;margin:0}
+.wrap{max-width:1050px;margin:auto;padding:12px 16px 34px}
+.tabs{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:12px 0 20px}
+.tab{padding:13px 20px;border-radius:16px;background:white;color:#58627a;font-weight:900;box-shadow:0 4px 0 #dce3f3}
+.tab.active{background:var(--purple);color:white;box-shadow:0 4px 0 #60349a}
+.panel{background:#ffffffed;border:3px solid white;border-radius:25px;padding:clamp(16px,3vw,28px);box-shadow:0 12px 30px #687aa31a}
+.panel h2{margin:0 0 8px;font-size:clamp(23px,4vw,32px)}
+.instruction{color:#64708b;margin:0 0 20px;font-size:17px}
+.progressrow{display:flex;justify-content:space-between;gap:10px;align-items:center;margin:12px 0}
+.progress{height:12px;background:#e8ecf7;border-radius:20px;overflow:hidden;flex:1}
+.bar{height:100%;width:0;background:linear-gradient(90deg,#83c94e,#38b8a3);transition:.3s}
+.score{background:#fff4c9;border-radius:12px;padding:8px 12px;font-weight:900;white-space:nowrap}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.wordcard{background:#f4f7ff;border:2px solid #e0e8fb;border-radius:18px;padding:15px 8px;text-align:center;min-height:135px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px}
+.emoji{font-size:42px;line-height:1.1}
+.word{font-size:22px;font-weight:900;color:#315eaa}
+.meaning{font-size:14px;color:#66728c}
+.task{background:#f7f4ff;border-radius:20px;padding:18px;margin:16px 0}
+.question{font-size:clamp(20px,3.5vw,27px);font-weight:900;text-align:center;margin:8px 0 16px}
+.options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.opt{padding:16px 12px;border:3px solid #e0e7f7;background:white;border-radius:16px;font-size:20px;font-weight:900;color:#35415c;min-height:62px}
+.opt:hover{border-color:#9b77d0;background:#fbf8ff}
+.opt.correct{background:#e7f8df;border-color:#79bd45;color:#286b24}
+.opt.wrong{background:#fff0f0;border-color:#ef8b8b;color:#a33}
+.feedback{text-align:center;font-weight:900;font-size:19px;min-height:28px;margin:12px 0;color:#347c35}
+.actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+.primary,.secondary{padding:13px 22px;border-radius:15px;font-weight:900;font-size:17px}
+.primary{background:#7c4db7;color:white;box-shadow:0 4px 0 #59328b}
+.secondary{background:#eaf0ff;color:#385c9d}
+.primary:disabled{opacity:.45;cursor:not-allowed}
+.hidden{display:none!important}
+input.answer{width:min(100%,440px);padding:15px;border:3px solid #d9e2f4;border-radius:14px;font-size:22px;text-align:center;font-weight:800;color:#27334e;display:block;margin:12px auto}
+.sentence{font-size:24px;font-weight:900;text-align:center;line-height:1.5;margin:18px 0}
+.chips{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:15px 0}
+.chip{background:#fff;border:2px solid #d9e2f4;padding:11px 15px;border-radius:13px;font-weight:900;font-size:19px}
+.chip.selected{background:#e9e0ff;border-color:#8b55c8}
+.result{text-align:center;padding:20px}
+.result .big{font-size:64px}
+.result h2{color:#7446ac}
+.smallnote{text-align:center;color:#7b849a;font-size:13px;margin-top:18px}
+@media(max-width:650px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.options{grid-template-columns:1fr}.wordcard{min-height:120px}.tab{flex:1;min-width:135px}}
+@media print{body{background:white}.tabs,.actions{display:none}.panel{box-shadow:none}}
+</style>
+</head>
+<body>
+<header>
+ <span class="tag">GRADE 3 • LESSON 2–3</span>
+ <h1>🌈 My Friends</h1>
+ <p class="sub">Let's learn, play and talk about our friends!</p>
+</header>
+<div class="wrap">
+ <nav class="tabs">
+  <button class="tab active" data-tab="words">⭐ 1. Character words</button>
+  <button class="tab" data-tab="grammar">🎒 2. Have got / Has got</button>
+ </nav>
+
+ <section class="panel" id="words">
+  <h2>⭐ Meet the adjectives!</h2>
+  <p class="instruction">Look, read and remember. Then play the quiz!</p>
+  <div class="grid">
+   <div class="wordcard"><div class="emoji">🤝</div><div class="word">kind</div><div class="meaning">добрый</div></div>
+   <div class="wordcard"><div class="emoji">😊</div><div class="word">friendly</div><div class="meaning">дружелюбный</div></div>
+   <div class="wordcard"><div class="emoji">🤡</div><div class="word">funny</div><div class="meaning">смешной</div></div>
+   <div class="wordcard"><div class="emoji">💡</div><div class="word">clever</div><div class="meaning">умный</div></div>
+   <div class="wordcard"><div class="emoji">🙈</div><div class="word">shy</div><div class="meaning">застенчивый</div></div>
+   <div class="wordcard"><div class="emoji">🙃</div><div class="word">naughty</div><div class="meaning">непослушный / озорной</div></div>
+  </div>
+  <div class="progressrow"><strong>🎯 Adjective quiz</strong><span class="score" id="wscore">⭐ 0 points</span></div>
+  <div class="progress"><div class="bar" id="wbar"></div></div>
+  <div class="task" id="wgame">
+   <div class="question" id="wq">Which word means «добрый»?</div>
+   <div class="options" id="wopts"></div>
+   <div class="feedback" id="wfeedback"></div>
+   <div class="actions"><button class="primary" id="wnext" disabled>Next question ➜</button></div>
+  </div>
+  <div class="result hidden" id="wresult"><div class="big">🏆</div><h2>Great job!</h2><p id="wfinal"></p><button class="primary" onclick="restartWords()">Play again ↻</button></div>
+ </section>
+
+ <section class="panel hidden" id="grammar">
+  <h2>🎒 Have got or Has got?</h2>
+  <p class="instruction">Remember the rule, then complete the challenges.</p>
+  <div class="task" style="background:#eef7ff">
+   <div class="question">🧠 Remember!</div>
+   <div class="options">
+    <div class="wordcard"><div class="word">I / You / We / They</div><div class="emoji">➡️</div><div class="word">have got</div></div>
+    <div class="wordcard"><div class="word">He / She / It</div><div class="emoji">➡️</div><div class="word">has got</div></div>
+   </div>
+   <p style="text-align:center;font-size:18px;font-weight:800">I have got a brother. • She has got a sister.</p>
+  </div>
+  <div class="progressrow"><strong>🚀 Grammar challenge</strong><span class="score" id="gscore">⭐ 0 points</span></div>
+  <div class="progress"><div class="bar" id="gbar"></div></div>
+  <div class="task" id="ggame">
+   <div class="question" id="gq">Choose the correct answer.</div>
+   <div class="sentence" id="gsentence">She ___ got a funny friend.</div>
+   <div class="options" id="gopts"></div>
+   <div class="feedback" id="gfeedback"></div>
+   <div class="actions"><button class="primary" id="gnext" disabled>Next challenge ➜</button></div>
+  </div>
+  <div class="result hidden" id="gresult"><div class="big">🎉</div><h2>Grammar superstar!</h2><p id="gfinal"></p><button class="primary" onclick="restartGrammar()">Play again ↻</button></div>
+ </section>
+ <p class="smallnote">Made for classroom practice • Works offline • Tap an answer to play</p>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{
+ document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===b));
+ $('words').classList.toggle('hidden',b.dataset.tab!=='words');
+ $('grammar').classList.toggle('hidden',b.dataset.tab!=='grammar');
+}));
+const wordQs=[
+ ['Which word means «добрый»?','kind',['kind','shy','naughty','funny']],
+ ['Which word means «смешной»?','funny',['clever','funny','friendly','kind']],
+ ['A person who likes helping others is…','kind',['naughty','kind','shy','funny']],
+ ['Which word means «умный»?','clever',['friendly','shy','clever','naughty']],
+ ['A person who feels nervous with new people is…','shy',['shy','kind','funny','clever']],
+ ['Which word means «дружелюбный»?','friendly',['naughty','funny','friendly','shy']],
+ ['A child who sometimes does bad things or does not listen is…','naughty',['clever','kind','naughty','friendly']],
+ ['Which adjective describes a person who makes you laugh?','funny',['shy','funny','kind','clever']]
+];
+let wi=0,ws=0,wanswered=false;
+function renderWord(){
+ wanswered=false;$('wfeedback').textContent='';$('wnext').disabled=true;
+ $('wq').textContent=wordQs[wi][0];$('wopts').innerHTML='';
+ wordQs[wi][2].forEach(a=>{let b=document.createElement('button');b.className='opt';b.textContent=a;b.onclick=()=>answerWord(b,a);$('wopts').appendChild(b)});
+ $('wbar').style.width=(wi/wordQs.length*100)+'%';$('wscore').textContent='⭐ '+ws+' points';
+}
+function answerWord(btn,a){
+ if(wanswered)return;wanswered=true;let ok=a===wordQs[wi][1];
+ [...$('wopts').children].forEach(b=>{if(b.textContent===wordQs[wi][1])b.classList.add('correct');else if(b===btn)b.classList.add('wrong');b.disabled=true});
+ if(ok){ws++;$('wfeedback').textContent='🌟 Excellent!';}else $('wfeedback').textContent='💛 Good try! Correct answer: '+wordQs[wi][1];
+ $('wscore').textContent='⭐ '+ws+' points';$('wnext').disabled=false;
+}
+$('wnext').onclick=()=>{wi++;if(wi===wordQs.length){$('wgame').classList.add('hidden');$('wresult').classList.remove('hidden');$('wfinal').textContent='You scored '+ws+' out of '+wordQs.length+' points!';$('wbar').style.width='100%'}else renderWord()};
+function restartWords(){wi=0;ws=0;$('wgame').classList.remove('hidden');$('wresult').classList.add('hidden');renderWord()}
+const grammarQs=[
+ ['She ___ got a sister.','has got'],['I ___ got a big schoolbag.','have got'],['They ___ got a lot of friends.','have got'],['He ___ got a dog.','has got'],['We ___ got new desks.','have got'],['My friend ___ got a pet.','has got'],['You ___ got a clever friend.','have got'],['It ___ got a funny name.','has got'],['My friends ___ got books.','have got'],['Nurlan ___ got a sister.','has got']
+];
+let gi=0,gs=0,ganswered=false;
+function renderGrammar(){
+ ganswered=false;$('gfeedback').textContent='';$('gnext').disabled=true;
+ $('gq').textContent='Choose the correct form:';
+ $('gsentence').textContent=grammarQs[gi][0];$('gopts').innerHTML='';
+ ['have got','has got'].forEach(a=>{let b=document.createElement('button');b.className='opt';b.textContent=a;b.onclick=()=>answerGrammar(b,a);$('gopts').appendChild(b)});
+ $('gbar').style.width=(gi/grammarQs.length*100)+'%';$('gscore').textContent='⭐ '+gs+' points';
+}
+function answerGrammar(btn,a){
+ if(ganswered)return;ganswered=true;let correct=grammarQs[gi][1],ok=a===correct;
+ [...$('gopts').children].forEach(b=>{if(b.textContent===correct)b.classList.add('correct');else if(b===btn)b.classList.add('wrong');b.disabled=true});
+ if(ok){gs++;$('gfeedback').textContent='🎉 That’s right!';}else $('gfeedback').textContent='💡 Correct answer: '+correct;
+ $('gscore').textContent='⭐ '+gs+' points';$('gnext').disabled=false;
+}
+$('gnext').onclick=()=>{gi++;if(gi===grammarQs.length){$('ggame').classList.add('hidden');$('gresult').classList.remove('hidden');$('gfinal').textContent='You scored '+gs+' out of '+grammarQs.length+' points!';$('gbar').style.width='100%'}else renderGrammar()};
+function restartGrammar(){gi=0;gs=0;$('ggame').classList.remove('hidden');$('gresult').classList.add('hidden');renderGrammar()}
+renderWord();renderGrammar();
+</script>
+</body>
+</html>
